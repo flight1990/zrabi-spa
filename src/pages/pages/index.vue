@@ -1,6 +1,6 @@
 <script setup>
 import {useStore} from 'vuex';
-import {computed, onMounted, reactive, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import DeleteConfirmation from "../../components/common/DeleteConfirmationComponent.vue";
 
 const store = useStore();
@@ -35,6 +35,10 @@ const deletePage = async (id) => {
   }
 }
 
+watch(() => params, async () => {
+  await fetchPages();
+}, {deep: true});
+
 onMounted(async () => {
   await fetchPages();
 });
@@ -57,6 +61,8 @@ onMounted(async () => {
             :loading="loading"
             :items="pages"
             :items-length="total"
+            :page="params.page"
+            :items-per-page="params.limit"
             @update:page="params.page = $event"
             @update:itemsPerPage="params.limit = $event"
         >

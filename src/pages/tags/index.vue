@@ -1,6 +1,6 @@
 <script setup>
 import {useStore} from 'vuex';
-import {computed, onMounted, reactive, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import DeleteConfirmation from "../../components/common/DeleteConfirmationComponent.vue";
 import ModifyModal from "./modifyModal.vue";
 
@@ -64,6 +64,7 @@ onMounted(async () => {
             :items="tags"
             :items-length="total"
             :page="params.page"
+            :items-per-page="params.limit"
             @update:page="params.page = $event"
             @update:itemsPerPage="params.limit = $event"
         >

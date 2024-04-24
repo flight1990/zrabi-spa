@@ -35,6 +35,11 @@ const drawer = ref(null);
             title="Теги"
             :to="{ name: 'tags.index' }"
         />
+        <v-list-item
+            prepend-icon="mdi-list-box-outline"
+            title="Категории"
+            :to="{ name: 'categories.index' }"
+        />
       </v-list>
     </v-navigation-drawer>
 

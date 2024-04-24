@@ -28,7 +28,7 @@ const mutations = {
     SET_PARAMS(state, params) {
         state.params = params;
     },
-    UPDATE_TAG(state, updatedTag) {
+    SET_UPDATED_TAG(state, updatedTag) {
         state.tags = state.tags.map(tag =>
             tag.id === updatedTag.id ? updatedTag : tag
         );
@@ -50,7 +50,7 @@ const actions = {
     },
     async updateTag({commit}, {payload, id}) {
         const {data} = await tagsApi.updateTag(payload, id);
-        commit('UPDATE_TAG', data.data);
+        commit('SET_UPDATED_TAG', data.data);
     },
     async deleteTag({dispatch}, id) {
         await tagsApi.deleteTag(id);

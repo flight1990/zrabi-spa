@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
+import {computed, onMounted, reactive, ref, watch} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 
@@ -22,7 +22,7 @@ const types = [
 
 const isEditing = computed(() => props.tag);
 
-const form = ref({
+const form = reactive({
   title: '',
   type: 'category'
 });
@@ -30,8 +30,8 @@ const form = ref({
 watch(() => dialog.value, (val) => {
   if (val) {
     error.value = {};
-    form.value.title = props.tag?.title ?? '';
-    form.value.type = props.tag?.type ?? 'category';
+    form.title = props.tag?.title ?? '';
+    form.type = props.tag?.type ?? 'category';
   }
 });
 
@@ -50,9 +50,7 @@ const updateTag = async () => {
   try {
     loading.value = true;
 
-    const payload = {...form.value};
-
-    await store.dispatch('tagsStore/updateTag', {payload, id: props.tag.id});
+    await store.dispatch("tagsStore/updateTag", {payload: form, id: props.tag.id});
 
     closeHadler();
 
@@ -67,9 +65,7 @@ const createTag = async () => {
   try {
     loading.value = true;
 
-    const payload = {...form.value};
-
-    await store.dispatch('tagsStore/createTag', payload);
+    await store.dispatch("tagsStore/createTag", form);
 
     closeHadler();
 

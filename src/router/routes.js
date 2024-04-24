@@ -9,6 +9,7 @@ import PagesIndex from "../pages/pages/index.vue";
 import PagesModify from "../pages/pages/modify.vue";
 
 import TagsIndex from "../pages/tags/index.vue";
+import CategoriesIndex from "../pages/categories/index.vue";
 
 const routes = [
     {
@@ -64,6 +65,11 @@ const routes = [
                 path: '/tags',
                 name: 'tags.index',
                 component: TagsIndex
+            },
+            {
+                path: '/categories',
+                name: 'categories.index',
+                component: CategoriesIndex
             },
         ]
     }

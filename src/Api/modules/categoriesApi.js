@@ -17,5 +17,8 @@ export const categoriesApi = {
     },
     deleteCategory(id) {
         return axiosInstance.delete(`${uri}/${id}`);
+    },
+    rebuildCategoriesTree(payload) {
+        return axiosInstance.post(`${uri}/rebuild`, payload);
     }
 }

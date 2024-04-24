@@ -21,16 +21,19 @@ const actions = {
     },
     async createCategory({dispatch, commit, state}, payload) {
         await categoriesApi.createCategory(payload);
-        dispatch('fetchCategories');
+        dispatch("fetchCategories");
     },
     async updateCategory({dispatch}, {payload, id}) {
         await categoriesApi.updateCategory(payload, id);
-        dispatch('fetchCategories');
+        dispatch("fetchCategories");
     },
     async deleteCategory({dispatch}, id) {
         await categoriesApi.deleteCategory(id);
-        dispatch('fetchCategories');
+        dispatch("fetchCategories");
     },
+    async rebuildCategoriesTree({}, payload) {
+        await categoriesApi.rebuildCategoriesTree(payload);
+    }
 }
 
 export default {

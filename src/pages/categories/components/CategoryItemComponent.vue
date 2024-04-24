@@ -1,5 +1,4 @@
 <script setup>
-import {toRefs} from "vue";
 import {useStore} from "vuex";
 import ModifyModal from "../modifyModal.vue";
 import DeleteConfirmation from "../../../components/common/DeleteConfirmationComponent.vue";
@@ -30,10 +29,10 @@ const deleteCategory = async (id) => {
 <template>
   <div>
     <v-card class="my-4" variant="outlined" elevation="2" color="primary">
-      <div class="d-md-flex align-center justify-space-between">
+      <div class="d-flex align-center justify-space-between">
 
-        <div class="d-flex align-center justify-space-between">
-          <v-icon class="cursor-grab mr-4" size="large">mdi-drag</v-icon>
+        <div class="d-flex align-center">
+          <v-icon class="handle cursor-grab mr-4" size="large">mdi-drag</v-icon>
           <div>
             <div>
               <b>{{ props.category.title }}</b>
@@ -49,18 +48,10 @@ const deleteCategory = async (id) => {
               :category="category"
           />
           <DeleteConfirmation
-            @modal:confirmed="deleteCategory(props.category.id)"
+              @modal:confirmed="deleteCategory(props.category.id)"
           />
         </div>
       </div>
     </v-card>
-
-    <CategoryItemComponent
-        v-for="chield in props.category.children"
-        :key="chield.id"
-        :category="chield"
-        :deph="deph + 1"
-    />
-
   </div>
 </template>

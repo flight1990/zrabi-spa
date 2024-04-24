@@ -8,7 +8,7 @@ export default defineConfig({
       vuetify({autoImport: true}),
   ],
   rollupOptions: {
-    external: ['vuetify'],
+    external: ['vuetify', 'lodash'],
     output: {
       globals: {
         vue: 'Vue',

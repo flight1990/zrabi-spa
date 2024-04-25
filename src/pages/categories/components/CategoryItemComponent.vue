@@ -28,7 +28,7 @@ const deleteCategory = async (id) => {
 
 <template>
   <div>
-    <v-card class="my-4" variant="outlined" elevation="2" color="primary">
+    <v-card variant="outlined" elevation="2" color="primary" rounded="0">
       <div class="d-flex align-center justify-space-between">
 
         <div class="d-flex align-center">

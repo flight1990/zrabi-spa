@@ -1,9 +1,9 @@
 <script setup>
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
-import CategoryItem from "./components/CategoryItemComponent.vue";
 import ModifyModal from "./modifyModal.vue";
-import Draggable from "vuedraggable";
+import DraggableComponent from "./components/DraggableComponent.vue";
+import {debounce} from "lodash";
 
 const store = useStore();
 
@@ -21,28 +21,28 @@ const fetchCategories = async () => {
   }
 }
 
-const rebuildCategoriesTree = async () => {
+onMounted(async () => {
+  await fetchCategories();
+});
+
+const rebuildCategoriesTree = debounce(async (data) => {
   try {
 
     loading.value = true;
-    await store.dispatch("categoriesStore/rebuildCategoriesTree", {data: categories.value});
+    await store.dispatch("categoriesStore/rebuildCategoriesTree", {data: data});
 
   } catch (e) {
     console.log(e);
   } finally {
     loading.value = false;
   }
-}
-
-onMounted(async () => {
-  await fetchCategories();
-});
+}, 250);
 
 </script>
 
 <template>
   <div>
-    <v-card :loading="loading">
+    <v-card :loading="loading" :disabled="loading">
       <v-card-title>Категории</v-card-title>
 
       <v-card-actions>
@@ -51,31 +51,11 @@ onMounted(async () => {
       </v-card-actions>
 
       <v-card-text class="pt-4">
-        <draggable
-            :list="categories"
-            class="dragArea"
-            :group="{ name: 'categories' }"
-            item-key="id"
-            handle=".handle"
-            @sort="rebuildCategoriesTree"
-        >
-          <template #item="{ element }">
-            <CategoryItem
-                :key="element.id"
-                :category="element"
-            />
-
-          </template>
-        </draggable>
+        <DraggableComponent
+          :items="categories"
+          @update:sort="rebuildCategoriesTree"
+        />
       </v-card-text>
     </v-card>
   </div>
 </template>
-
-<style scoped>
-.dragArea {
-  min-height: 50px;
-  padding: 10px;
-  outline: 1px dashed;
-}
-</style>

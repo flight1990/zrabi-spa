@@ -36,7 +36,7 @@ const rebuildCategoriesTree = debounce(async (data) => {
   } finally {
     loading.value = false;
   }
-}, 250);
+}, 500);
 
 </script>
 

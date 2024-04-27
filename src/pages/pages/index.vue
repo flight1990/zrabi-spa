@@ -35,13 +35,17 @@ const deletePage = async (id) => {
   }
 }
 
-watch(() => params, async () => {
-  await fetchPages();
-}, {deep: true});
+const pageUpdateHandler = (event) => {
+  params.value.page = event;
+  fetchPages();
+}
 
-onMounted(async () => {
-  await fetchPages();
-});
+const limitUpdateHandler = (event) => {
+  params.value.limit = event;
+  fetchPages();
+}
+
+onMounted(async () => await fetchPages());
 
 </script>
 
@@ -63,8 +67,8 @@ onMounted(async () => {
             :items-length="total"
             :page="params.page"
             :items-per-page="params.limit"
-            @update:page="params.page = $event"
-            @update:itemsPerPage="params.limit = $event"
+            @update:page="pageUpdateHandler"
+            @update:itemsPerPage="limitUpdateHandler"
         >
           <template v-slot:item.actions="{ item }">
             <div class="d-md-flex align-center">

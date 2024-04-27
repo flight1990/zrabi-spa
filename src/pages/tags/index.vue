@@ -37,9 +37,15 @@ const deleteTag = async (id) => {
   }
 }
 
-watch(() => params, async () => {
-  await fetchTags();
-}, {deep: true});
+const pageUpdateHandler = (event) => {
+  params.value.page = event;
+  fetchTags();
+}
+
+const limitUpdateHandler = (event) => {
+  params.value.limit = event;
+  fetchTags();
+}
 
 onMounted(async () => {
   await fetchTags();
@@ -65,8 +71,8 @@ onMounted(async () => {
             :items-length="total"
             :page="params.page"
             :items-per-page="params.limit"
-            @update:page="params.page = $event"
-            @update:itemsPerPage="params.limit = $event"
+            @update:page="pageUpdateHandler"
+            @update:itemsPerPage="limitUpdateHandler"
         >
           <template v-slot:item.actions="{ item }">
             <div class="d-md-flex align-center">

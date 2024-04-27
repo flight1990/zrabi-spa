@@ -36,13 +36,17 @@ const deleteUser = async (id) => {
   }
 }
 
-watch(() => params, async () => {
-  await fetchUsers();
-}, {deep: true});
+const pageUpdateHandler = (event) => {
+  params.value.page = event;
+  fetchUsers();
+}
 
-onMounted(async () => {
-  await fetchUsers();
-});
+const limitUpdateHandler = (event) => {
+  params.value.limit = event;
+  fetchUsers();
+}
+
+onMounted(async () => await fetchUsers());
 
 </script>
 
@@ -64,8 +68,8 @@ onMounted(async () => {
             :items-length="total"
             :page="params.page"
             :items-per-page="params.limit"
-            @update:page="params.page = $event"
-            @update:itemsPerPage="params.limit = $event"
+            @update:page="pageUpdateHandler"
+            @update:itemsPerPage="limitUpdateHandler"
         >
           <template v-slot:item.actions="{ item }">
             <div class="d-md-flex align-center">
@@ -74,7 +78,7 @@ onMounted(async () => {
               </v-btn>
 
               <DeleteConfirmation
-                @modal:confirmed="deleteUser(item.id)"
+                  @modal:confirmed="deleteUser(item.id)"
               />
             </div>
           </template>

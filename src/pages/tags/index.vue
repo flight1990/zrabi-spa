@@ -2,7 +2,7 @@
 import {useStore} from 'vuex';
 import {computed, onMounted, ref, watch} from "vue";
 import DeleteConfirmation from "../../components/common/DeleteConfirmationComponent.vue";
-import ModifyModal from "./modifyModal.vue";
+import ModifyModal from "./components/modifyComponent.vue";
 
 const store = useStore();
 

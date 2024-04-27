@@ -31,8 +31,9 @@ const actions = {
         await categoriesApi.deleteCategory(id);
         dispatch("fetchCategories");
     },
-    async rebuildCategoriesTree({}, payload) {
+    async rebuildCategoriesTree({dispatch}, payload) {
         await categoriesApi.rebuildCategoriesTree(payload);
+        dispatch("fetchCategories");
     }
 }
 

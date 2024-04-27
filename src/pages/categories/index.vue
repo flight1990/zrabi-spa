@@ -1,7 +1,7 @@
 <script setup>
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
-import ModifyModal from "./modifyModal.vue";
+import ModifyModal from "./components/modifyComponent.vue";
 import DraggableComponent from "./components/DraggableComponent.vue";
 import {debounce} from "lodash";
 
@@ -21,9 +21,7 @@ const fetchCategories = async () => {
   }
 }
 
-onMounted(async () => {
-  await fetchCategories();
-});
+onMounted(async () => await fetchCategories());
 
 const rebuildCategoriesTree = debounce(async (data) => {
   try {

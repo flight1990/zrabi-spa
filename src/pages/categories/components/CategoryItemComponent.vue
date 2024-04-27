@@ -1,19 +1,17 @@
 <script setup>
 import {useStore} from "vuex";
-import ModifyModal from "../modifyModal.vue";
+import ModifyModal from "./modifyComponent.vue";
 import DeleteConfirmation from "../../../components/common/DeleteConfirmationComponent.vue";
+import {toRefs} from "vue";
 
 const props = defineProps({
   category: {
     type: Object,
     required: true
-  },
-  deph: {
-    type: Number,
-    default: 1
   }
 });
 
+const {category} = toRefs(props);
 const store = useStore();
 
 const deleteCategory = async (id) => {
@@ -35,10 +33,10 @@ const deleteCategory = async (id) => {
           <v-icon class="handle cursor-grab mr-4" size="large">mdi-drag</v-icon>
           <div>
             <div>
-              <b>{{ props.category.title }}</b>
+              <b>{{ category.title }}</b>
             </div>
             <div>
-              <small>{{ props.category.slug }}</small>
+              <small>{{ category.slug }}</small>
             </div>
           </div>
         </div>
@@ -48,7 +46,7 @@ const deleteCategory = async (id) => {
               :category="category"
           />
           <DeleteConfirmation
-              @modal:confirmed="deleteCategory(props.category.id)"
+              @modal:confirmed="deleteCategory(category.id)"
           />
         </div>
       </div>

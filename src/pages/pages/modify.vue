@@ -1,17 +1,17 @@
 <script setup>
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 
 const store = useStore();
 const router = useRouter();
 
-const pageId = computed(() => router.currentRoute.value.params.id);
-const isEditing = computed(() => !!pageId.value);
+const id = computed(() => router.currentRoute.value.params.id);
+const current = computed(() => store.getters["pagesStore/currentPage"]);
 
-const form = ref({
-  title: '',
-  content: '',
+const payload = reactive({
+  title: null,
+  content: null,
 });
 
 const error = ref({});
@@ -21,10 +21,8 @@ const fetchPage = async () => {
   try {
     loading.value = true;
 
-    await store.dispatch('pagesStore/fetchPage', pageId.value);
-    const currentPage = store.getters['pagesStore/currentPage'];
-
-    Object.assign(form.value, currentPage);
+    await store.dispatch('pagesStore/fetchPage', id.value);
+    Object.assign(payload, current.value);
 
   } catch (error) {
     console.error('Error fetching page:', error);
@@ -35,11 +33,9 @@ const fetchPage = async () => {
 
 const updatePage = async () => {
   try {
+
     loading.value = true;
-
-    const payload = {...form.value};
-
-    await store.dispatch('pagesStore/updatePage', {payload, id: pageId.value});
+    await store.dispatch('pagesStore/updatePage', {payload, id: id.value});
 
   } catch (e) {
     error.value = e.response.data.errors;
@@ -52,8 +48,6 @@ const createPage = async () => {
   try {
 
     loading.value = true;
-    const payload = {...form.value};
-
     await store.dispatch('pagesStore/createPage', payload);
 
   } catch (e) {
@@ -64,33 +58,32 @@ const createPage = async () => {
 }
 
 onMounted(() => {
-  if (isEditing.value) {
-    fetchPage();
-  }
+  if (id.value) fetchPage();
 });
 </script>
 
 <template>
   <div>
-    <v-card :loading="loading">
+    <v-card :loading="loading" :disabled="loading">
       <v-card-title>
-        {{ isEditing ? 'Редактировать' : 'Создать' }} страницу
+        {{ id ? 'Редактировать' : 'Создать' }} страницу
       </v-card-title>
 
       <v-card-text>
-        <v-form>
+        <v-payload>
           <v-text-field
+              autofocus
               label="Название"
-              v-model="form.title"
+              v-model="payload.title"
               :error-messages="error.title"
           />
 
           <v-textarea
               label="Содержимое"
-              v-model="form.content"
+              v-model="payload.content"
               :error-messages="error.content"
           />
-        </v-form>
+        </v-payload>
       </v-card-text>
 
       <v-card-actions>
@@ -98,10 +91,10 @@ onMounted(() => {
         <v-btn
             variant="tonal"
             color="primary"
-            @click.prevent="isEditing ? updatePage() : createPage()"
+            @click.prevent="id ? updatePage() : createPage()"
             :disabled="loading"
         >
-          {{ isEditing ? 'Обновить' : 'Создать' }}
+          {{ id ? 'Обновить' : 'Создать' }}
         </v-btn>
       </v-card-actions>
     </v-card>

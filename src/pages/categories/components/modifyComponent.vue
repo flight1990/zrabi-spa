@@ -1,5 +1,5 @@
 <script setup>
-import {computed, reactive, ref, watch} from "vue";
+import {reactive, ref, toRefs, watch} from "vue";
 import {useStore} from "vuex";
 
 const props = defineProps({
@@ -8,20 +8,19 @@ const props = defineProps({
   }
 });
 
-const store = useStore();
+const {category} = toRefs(props);
 
+const store = useStore();
 const dialog = ref(false);
 
-const isEditing = computed(() => props.category);
-
-const form = reactive({
-  title: ''
+const payload = reactive({
+  title: null
 });
 
 watch(() => dialog.value, (val) => {
   if (val) {
     error.value = {};
-    form.title = props.category?.title ?? '';
+    payload.title = category.value?.title ?? null;
   }
 });
 
@@ -39,11 +38,9 @@ const closeHadler = () => {
 const createCategory = async () => {
   try {
     loading.value = true;
-
-    await store.dispatch("categoriesStore/createCategory", form);
+    await store.dispatch("categoriesStore/createCategory", payload);
 
     closeHadler();
-
   } catch (e) {
     error.value = e.response.data.errors;
   } finally {
@@ -54,11 +51,9 @@ const createCategory = async () => {
 const updateCategory = async () => {
   try {
     loading.value = true;
-
-    await store.dispatch("categoriesStore/updateCategory", {payload: form, id: props.category.id});
+    await store.dispatch("categoriesStore/updateCategory", {payload: payload, id: category.value.id});
 
     closeHadler();
-
   } catch (e) {
     error.value = e.response.data.errors;
   } finally {
@@ -70,7 +65,7 @@ const updateCategory = async () => {
 
 <template>
   <div>
-    <v-btn icon variant="text" @click="openHandler" v-if="isEditing">
+    <v-btn icon variant="text" @click="openHandler" v-if="category">
       <v-icon>mdi-pencil</v-icon>
     </v-btn>
 
@@ -84,13 +79,14 @@ const updateCategory = async () => {
     >
       <v-card width="400" :loading="loading">
         <v-card-title>
-          {{ isEditing ? 'Редактировать' : 'Создать' }} категорию
+          {{ category ? 'Редактировать' : 'Создать' }} категорию
         </v-card-title>
 
         <v-card-text>
           <v-text-field
+              autofocus
               label="Название"
-              v-model="form.title"
+              v-model="payload.title"
               :error-messages="error.title"
           />
         </v-card-text>
@@ -101,10 +97,10 @@ const updateCategory = async () => {
           <v-btn @click="closeHadler">Отмена</v-btn>
 
           <v-btn
-              @click="isEditing ? updateCategory() : createCategory()"
+              @click="category ? updateCategory() : createCategory()"
               :disabled="loading"
           >
-            {{ isEditing ? 'Обновить' : 'Создать' }}
+            {{ category ? 'Обновить' : 'Создать' }}
           </v-btn>
         </template>
       </v-card>

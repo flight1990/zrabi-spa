@@ -1,6 +1,4 @@
 import {tagsApi} from "../../Api/modules/tagsApi.js";
-import router from "../../router/index.js";
-import {usersApi} from "../../Api/modules/usersApi.js";
 
 const state = {
     tags: [],

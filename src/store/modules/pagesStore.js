@@ -1,4 +1,4 @@
-import {pagesApi} from "../../Api/modules/pagesApi.js";
+import {pagesService} from "../../Api/services/pagesService.js";
 import router from "../../router/index.js";
 
 const state = {
@@ -37,25 +37,25 @@ const actions = {
     async fetchPages({commit}, params) {
         if (params) commit('SET_PARAMS', params);
 
-        const {data} = await pagesApi.getPages();
+        const {data} = await pagesService.getPages(state.params);
 
         commit('SET_PAGES', data.data);
         commit('SET_TOTAL', data.meta.total);
     },
     async fetchPage({commit}, id) {
-        const {data} = await pagesApi.findPageById(id);
+        const {data} = await pagesService.findPageById(id);
         commit('SET_CURRENT_PAGE', data.data);
     },
     async createPage({commit}, payload) {
-        await pagesApi.createPage(payload);
+        await pagesService.createPage(payload);
         await router.push({name: 'pages.index'});
     },
     async updatePage({commit}, {payload, id}) {
-        await pagesApi.updatePage(payload, id);
+        await pagesService.updatePage(payload, id);
         await router.push({name: 'pages.index'});
     },
     async deletePage({dispatch}, id) {
-        await pagesApi.deletePage(id);
+        await pagesService.deletePage(id);
         dispatch('fetchPages');
     }
 }

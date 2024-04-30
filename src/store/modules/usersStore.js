@@ -1,4 +1,4 @@
-import {usersApi} from "../../Api/modules/usersApi.js";
+import {usersService} from "../../Api/services/usersService.js";
 import router from "../../router/index.js";
 
 const state = {
@@ -37,25 +37,25 @@ const actions = {
     async fetchUsers({commit, state}, params) {
         if (params) commit('SET_PARAMS', params);
 
-        const {data} = await usersApi.getUsers(state.params);
+        const {data} = await usersService.getUsers(state.params);
 
         commit('SET_USERS', data.data);
         commit('SET_TOTAL', data.meta.total);
     },
     async fetchUser({commit}, id) {
-        const {data} = await usersApi.findUserById(id);
+        const {data} = await usersService.findUserById(id);
         commit('SET_CURRENT_USER', data.data);
     },
     async createUser({commit}, payload) {
-        await usersApi.createUser(payload);
+        await usersService.createUser(payload);
         await router.push({name: 'users.index'});
     },
     async updateUser({commit}, {payload, id}) {
-        await usersApi.updateUser(payload, id);
+        await usersService.updateUser(payload, id);
         await router.push({name: 'users.index'});
     },
     async deleteUser({dispatch}, id) {
-        await usersApi.deleteUser(id);
+        await usersService.deleteUser(id);
         dispatch('fetchUsers');
     },
 }

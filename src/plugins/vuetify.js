@@ -21,6 +21,13 @@ const vuetify = createVuetify({
             density: 'comfortable',
             color: 'light-blue-darken-4'
         },
+        VSwitch: {
+            color: 'light-blue-darken-4',
+            hideDetails: true
+        },
+        VChip: {
+            size: 'small'
+        },
         VTextarea: {
             variant: 'underlined',
             density: 'comfortable',

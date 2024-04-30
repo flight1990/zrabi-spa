@@ -39,21 +39,17 @@ const rebuildCategoriesTree = debounce(async (data) => {
 </script>
 
 <template>
-  <div>
-    <v-card :loading="loading" :disabled="loading">
-      <v-card-title>Категории</v-card-title>
+  <v-card :loading="loading" :disabled="loading">
+    <v-card-title>Категории</v-card-title>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <ModifyModal/>
-      </v-card-actions>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <ModifyModal/>
+    </v-card-actions>
 
-      <v-card-text class="pt-4">
-        <DraggableComponent
-          :items="categories"
-          @update:sort="rebuildCategoriesTree"
-        />
-      </v-card-text>
-    </v-card>
-  </div>
+    <DraggableComponent
+        :items="categories"
+        @update:sort="rebuildCategoriesTree"
+    />
+  </v-card>
 </template>

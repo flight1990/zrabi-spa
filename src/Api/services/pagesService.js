@@ -1,24 +1,21 @@
 import {axiosInstance} from "../index.js";
 
-const uri = '/admin/categories';
+const uri = '/admin/pages';
 
-export const categoriesApi = {
-    getCategories() {
+export const pagesService = {
+    getPages() {
         return axiosInstance.get(uri);
     },
-    findCategoryById(id) {
+    findPageById(id) {
         return axiosInstance.get(`${uri}/${id}`);
     },
-    createCategory(payload) {
+    createPage(payload) {
         return axiosInstance.post(uri, payload);
     },
-    updateCategory(payload, id) {
+    updatePage(payload, id) {
         return axiosInstance.patch(`${uri}/${id}`, payload);
     },
-    deleteCategory(id) {
+    deletePage(id) {
         return axiosInstance.delete(`${uri}/${id}`);
-    },
-    rebuildCategoriesTree(payload) {
-        return axiosInstance.post(`${uri}/rebuild`, payload);
     }
 }

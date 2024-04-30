@@ -68,55 +68,50 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <v-card :loading="loading">
-      <v-card-title>
-        {{ id ? 'Редактировать' : 'Создать' }} пользователя
-      </v-card-title>
+  <v-card :loading="loading">
+    <v-card-title>
+      {{ id ? 'Редактировать' : 'Создать' }} пользователя
+    </v-card-title>
 
-      <v-card-text>
-        <v-form>
-          <v-text-field
-              autofocus
-              label="Ф.И.О"
-              v-model="payload.name"
-              :error-messages="error.name"
-          />
+    <v-card-text>
+      <v-text-field
+          autofocus
+          label="Ф.И.О"
+          v-model="payload.name"
+          :error-messages="error.name"
+      />
 
-          <v-text-field
-              label="Email"
-              v-model="payload.email"
-              :error-messages="error.email"
-          />
+      <v-text-field
+          label="Email"
+          v-model="payload.email"
+          :error-messages="error.email"
+      />
 
-          <v-text-field
-              type="password"
-              label="Пароль"
-              v-model="payload.password"
-              :error-messages="error.password"
-          />
+      <v-text-field
+          type="password"
+          label="Пароль"
+          v-model="payload.password"
+          :error-messages="error.password"
+      />
 
-          <v-text-field
-              type="password"
-              label="Подтверждение пароля"
-              v-model="payload.password_confirmation"
-              :error-messages="error.password_confirmation"
-          />
-        </v-form>
+      <v-text-field
+          type="password"
+          label="Подтверждение пароля"
+          v-model="payload.password_confirmation"
+          :error-messages="error.password_confirmation"
+      />
+    </v-card-text>
 
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-            variant="tonal"
-            color="primary"
-            @click.prevent="id ? updateUser() : createUser()"
-            :disabled="loading"
-        >
-          {{ id ? 'Обновть' : 'Создать' }}
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+          variant="tonal"
+          color="primary"
+          @click.prevent="id ? updateUser() : createUser()"
+          :disabled="loading"
+      >
+        {{ id ? 'Обновть' : 'Создать' }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>

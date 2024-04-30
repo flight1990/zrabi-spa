@@ -40,6 +40,11 @@ const drawer = ref(null);
             title="Категории"
             :to="{ name: 'categories.index' }"
         />
+        <v-list-item
+            prepend-icon="mdi-toolbox-outline"
+            title="Услуги"
+            :to="{ name: 'services.index' }"
+        />
       </v-list>
     </v-navigation-drawer>
 

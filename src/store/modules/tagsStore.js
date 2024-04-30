@@ -1,4 +1,4 @@
-import {tagsApi} from "../../Api/modules/tagsApi.js";
+import {tagsService} from "../../Api/services/tagsService.js";
 
 const state = {
     tags: [],
@@ -37,21 +37,21 @@ const actions = {
     async fetchTags({commit, state}, params) {
         if (params) commit('SET_PARAMS', params);
 
-        const {data} = await tagsApi.getTags(state.params);
+        const {data} = await tagsService.getTags(state.params);
 
         commit('SET_TAGS', data.data);
         commit('SET_TOTAL', data.meta.total);
     },
     async createTag({dispatch, commit, state}, payload) {
-        await tagsApi.createTag(payload);
+        await tagsService.createTag(payload);
         dispatch('fetchTags');
     },
     async updateTag({commit}, {payload, id}) {
-        const {data} = await tagsApi.updateTag(payload, id);
+        const {data} = await tagsService.updateTag(payload, id);
         commit('SET_UPDATED_TAG', data.data);
     },
     async deleteTag({dispatch}, id) {
-        await tagsApi.deleteTag(id);
+        await tagsService.deleteTag(id);
         dispatch('fetchTags');
     },
 }

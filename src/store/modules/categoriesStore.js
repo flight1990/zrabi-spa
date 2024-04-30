@@ -1,4 +1,4 @@
-import {categoriesApi} from "../../Api/modules/categoriesApi.js";
+import {categoriesService} from "../../Api/services/categoriesService.js";
 
 const state = {
     categories: []
@@ -16,23 +16,23 @@ const mutations = {
 
 const actions = {
     async fetchCategories({commit}) {
-        const {data} = await categoriesApi.getCategories();
+        const {data} = await categoriesService.getCategories();
         commit("SET_CATEGORIES", data.data);
     },
     async createCategory({dispatch, commit, state}, payload) {
-        await categoriesApi.createCategory(payload);
+        await categoriesService.createCategory(payload);
         dispatch("fetchCategories");
     },
     async updateCategory({dispatch}, {payload, id}) {
-        await categoriesApi.updateCategory(payload, id);
+        await categoriesService.updateCategory(payload, id);
         dispatch("fetchCategories");
     },
     async deleteCategory({dispatch}, id) {
-        await categoriesApi.deleteCategory(id);
+        await categoriesService.deleteCategory(id);
         dispatch("fetchCategories");
     },
     async rebuildCategoriesTree({dispatch}, payload) {
-        await categoriesApi.rebuildCategoriesTree(payload);
+        await categoriesService.rebuildCategoriesTree(payload);
         dispatch("fetchCategories");
     }
 }

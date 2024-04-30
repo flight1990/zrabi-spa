@@ -12,6 +12,7 @@ const current = computed(() => store.getters["pagesStore/currentPage"]);
 const payload = reactive({
   title: null,
   content: null,
+  is_active: false
 });
 
 const error = ref({});
@@ -63,40 +64,41 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <v-card :loading="loading" :disabled="loading">
-      <v-card-title>
-        {{ id ? 'Редактировать' : 'Создать' }} страницу
-      </v-card-title>
+  <v-card :loading="loading" :disabled="loading">
+    <v-card-title>
+      {{ id ? 'Редактировать' : 'Создать' }} страницу
+    </v-card-title>
 
-      <v-card-text>
-        <v-payload>
-          <v-text-field
-              autofocus
-              label="Название"
-              v-model="payload.title"
-              :error-messages="error.title"
-          />
+    <v-card-text>
+      <v-text-field
+          autofocus
+          label="Название"
+          v-model="payload.title"
+          :error-messages="error.title"
+      />
 
-          <v-textarea
-              label="Содержимое"
-              v-model="payload.content"
-              :error-messages="error.content"
-          />
-        </v-payload>
-      </v-card-text>
+      <v-textarea
+          label="Содержимое"
+          v-model="payload.content"
+          :error-messages="error.content"
+      />
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-            variant="tonal"
-            color="primary"
-            @click.prevent="id ? updatePage() : createPage()"
-            :disabled="loading"
-        >
-          {{ id ? 'Обновить' : 'Создать' }}
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
+      <v-switch
+          label="Страница активна"
+          v-model="payload.is_active"
+      />
+    </v-card-text>
+
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+          variant="tonal"
+          color="primary"
+          @click.prevent="id ? updatePage() : createPage()"
+          :disabled="loading"
+      >
+        {{ id ? 'Обновить' : 'Создать' }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>

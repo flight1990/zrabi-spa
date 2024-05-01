@@ -21,7 +21,7 @@ const fetchCategories = async () => {
   }
 }
 
-onMounted(async () => await fetchCategories());
+onMounted(() => fetchCategories());
 
 const rebuildCategoriesTree = debounce(async (data) => {
   try {

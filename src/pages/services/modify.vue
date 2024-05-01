@@ -8,12 +8,13 @@ const router = useRouter();
 
 const id = computed(() => router.currentRoute.value.params.id);
 const current = computed(() => store.getters["servicesStore/currentService"]);
+const categories = computed(() => store.getters["categoriesStore/flattenedCategories"]);
 
 const payload = reactive({
   title: null,
   content: null,
   price: null,
-  category_id: null,
+  category_id: 1,
   is_active: false
 });
 
@@ -60,6 +61,7 @@ const createService = async () => {
 
 onMounted(() => {
   if (id.value) fetchService();
+  store.dispatch("categoriesStore/fetchCategories");
 });
 </script>
 
@@ -70,11 +72,20 @@ onMounted(() => {
     </v-card-title>
 
     <v-card-text>
+
       <v-text-field
           autofocus
           label="Название"
           v-model="payload.title"
           :error-messages="error.title"
+      />
+
+      <v-select
+        label="Категория"
+        :items="categories"
+        item-title="title"
+        item-value="id"
+        v-model="payload.category_id"
       />
 
       <v-textarea

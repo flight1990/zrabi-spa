@@ -1,14 +1,13 @@
-import DefaultLayout from "../layouts/default.vue";
-
-import Dashboard from "../pages/index.vue";
-import UsersIndex from "../pages/users/index.vue";
-import UsersModify from "../pages/users/modify.vue";
-import PagesIndex from "../pages/pages/index.vue";
-import PagesModify from "../pages/pages/modify.vue";
-import TagsIndex from "../pages/tags/index.vue";
-import CategoriesIndex from "../pages/categories/index.vue";
-import ServicesIndex from "../pages/services/index.vue";
-import ServicesModify from "../pages/services/modify.vue";
+const DefaultLayout = () => import("../layouts/default.vue");
+const Dashboard = () => import("../pages/index.vue");
+const UsersIndex = () => import("../pages/users/index.vue");
+const UsersModify = () => import("../pages/users/modify.vue");
+const PagesIndex = () => import("../pages/pages/index.vue");
+const PagesModify = () => import("../pages/pages/modify.vue");
+const TagsIndex = () => import("../pages/tags/index.vue");
+const CategoriesIndex = () => import("../pages/categories/index.vue");
+const ServicesIndex = () => import("../pages/services/index.vue");
+const ServicesModify = () => import("../pages/services/modify.vue");
 
 const routes = [
     {

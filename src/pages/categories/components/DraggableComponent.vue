@@ -1,6 +1,6 @@
 <script setup>
 import Draggable from "vuedraggable";
-import CategoryItem from "./CategoryItemComponent.vue";
+import CategoryItem from "./CategoryItemComponent.vue"
 import {useStore} from "vuex";
 import {toRefs} from "vue";
 

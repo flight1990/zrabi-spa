@@ -41,7 +41,6 @@ const rebuildCategoriesTree = debounce(async (data) => {
 <template>
   <v-card :loading="loading" :disabled="loading">
     <v-card-title>Категории</v-card-title>
-
     <v-card-actions>
       <v-spacer></v-spacer>
       <ModifyModal/>
